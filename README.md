@@ -1,5 +1,10 @@
 # siscrete_drinks
 
+## Instalação
+1. `git clone https://github.com/MuriWolf/sisfrete-drinks.git` 
+2. `npm install` 
+3. `npm run dev`
+
 ## Design
 ### Página principal
 ![image](https://github.com/user-attachments/assets/0b900865-0738-42fb-801d-b657e9fdcff9)
