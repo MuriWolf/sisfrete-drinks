@@ -20,7 +20,8 @@ const letterModel = defineModel('letter')
 <style scoped lang="scss">
 .layout-az-input {
   display: flex;
-  width: min-content;
+  width: 100%;
+  flex-wrap: wrap;
   align-items: center;
   background-color: var(--color-secondary);
   border-radius: 0.125rem;
@@ -28,7 +29,8 @@ const letterModel = defineModel('letter')
   button {
     border: none;
     background-color: var(--color-secondary);
-    padding: 0.35rem;
+    padding: 0.625rem;
+
     cursor: pointer;
     transition: all 0.25s ease;
 

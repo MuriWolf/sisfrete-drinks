@@ -7,10 +7,11 @@ import AppCategories from '../components/AppCategories.vue'
 import validateResponse from '@/api/utils/validateResponse'
 import HomeHeader from '@/components/HomeHeader.vue'
 import getCocktailByName from '@/api/getCocktailByName'
-// import { useFavoritesStore } from '@/stores/favorites'
+import { useFavoritesStore } from '@/stores/favorites'
 import AppFooter from '@/components/AppFooter.vue'
+import IconHeart from '@/components/icons/IconHeart.vue'
 
-// const favorites = useFavoritesStore()
+const favorites = useFavoritesStore()
 
 const letterSelected = ref('A')
 const cocktails = ref([])
@@ -91,26 +92,29 @@ async function handleFilterCocktailsByCategory() {
 <template>
   <HomeHeader @send-search-cocktail="handleGetCocktailByName" />
   <main>
-    <!-- <button @click="() => console.log(favorites.getCocktails)">get favorites</button> -->
     <section>
       <AzInput v-model:letter="letterSelected"></AzInput>
       <div class="layout-cocktail-result">
-        <RouterLink
-          v-for="cocktail in cocktails"
-          :key="cocktail.idDrink"
-          :to="'/drink/' + cocktail.strDrink"
-        >
-          <div class="cocktail-result">
+        <div v-for="cocktail in cocktails" :key="cocktail.idDrink" class="cocktail-result">
+          <button @click="favorites.toggle(cocktail)" class="favorite-button">
+            <IconHeart
+              :style="
+                favorites.cocktails.includes(cocktail.idDrink)
+                  ? 'fill: rgb(209, 11, 11)'
+                  : 'fill: rgb(66, 66, 66)'
+              "
+            />
+          </button>
+          <RouterLink :to="'/drink/' + cocktail.strDrink">
             <img :src="cocktail.strDrinkThumb + '/medium'" width="250" height="250" alt="" />
             <p>{{ cocktail.strDrink }}</p>
-          </div>
-        </RouterLink>
+          </RouterLink>
+        </div>
       </div>
     </section>
     <section>
       <AppCategories v-model:categorySelected="categorySelected"></AppCategories>
     </section>
-    <!-- <RouterLink to="/drink/gg">Go to drink</RouterLink> -->
   </main>
   <AppFooter />
 </template>
@@ -124,9 +128,15 @@ main {
   width: 100%;
   max-width: 1280px;
   margin: auto;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
-  padding: 0px 1rem;
+  padding: 0px 0.5rem;
+
+  @media (min-width: 340px) {
+    padding: 0px 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 
   @media (min-width: 1024px) {
     flex-direction: row;
@@ -137,14 +147,56 @@ main {
   display: flex;
   flex-wrap: wrap;
   margin-top: 2rem;
-  gap: 2rem;
+  gap: 1rem;
+
+  @media (min-width: 768px) {
+    gap: 2rem;
+  }
+
   .cocktail-result {
+    position: relative;
+    flex: 1;
+
     p {
       color: var(--color-light);
     }
 
     img {
       border-radius: 0.125rem;
+      min-width: 200px;
+      min-height: 200px;
+      width: 100% !important;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+
+      @media (min-width: 768px) {
+        min-width: 250px;
+        min-height: 250px;
+      }
+    }
+
+    .favorite-button {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.25s ease;
+
+      svg {
+        stroke: white;
+        stroke-width: 0.125rem;
+      }
+
+      &:hover {
+        filter: brightness(1.3);
+      }
+
+      &:active {
+        transform: scale(0.9);
+      }
     }
   }
 }
