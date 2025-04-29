@@ -4,11 +4,12 @@ import filterCocktailsByCategory from '../api/filterCocktailsByCategory'
 import { ref, watch } from 'vue'
 import AzInput from '../components/AzInput.vue'
 import AppCategories from '../components/AppCategories.vue'
-// import AppHeader from '../components/AppHeader.vue'
 import validateResponse from '@/api/utils/validateResponse'
-// import getCocktailByName from '@/api/getCocktailByName'
 import HomeHeader from '@/components/HomeHeader.vue'
 import getCocktailByName from '@/api/getCocktailByName'
+import { useFavoritesStore } from '@/stores/favorites'
+
+const favorites = useFavoritesStore()
 
 const letterSelected = ref('')
 const cocktails = ref([])
@@ -84,14 +85,19 @@ async function handleFilterCocktailsByCategory() {
   <!-- <AppHeader @update-cocktails="handleUpdateCocktails" /> -->
   <main>
     <h1>hey</h1>
+    <button @click="() => console.log(favorites.getCocktails)">get favorites</button>
     <AzInput v-model:letter="letterSelected"></AzInput>
     {{ letterSelected }}
     <AppCategories v-model:categorySelected="categorySelected"></AppCategories>
     <ul>
       <li v-for="cocktail in cocktails" :key="cocktail.idDrink">
-        {{ cocktail }}
+        <button @click="favorites.toggle(cocktail)">
+          {{ cocktail }}
+        </button>
+        <p v-if="favorites.cocktails.includes(cocktail.idDrink)">i am a favorite</p>
       </li>
     </ul>
-    <a href="/drink/teste">go to drink</a>
+
+    <RouterLink to="/drink/gg">Go to drink</RouterLink>
   </main>
 </template>

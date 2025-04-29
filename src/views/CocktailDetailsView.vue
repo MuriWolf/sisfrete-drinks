@@ -1,9 +1,12 @@
 <script setup lang="js">
 import getCocktailByName from '@/api/getCocktailByName'
 import validateResponse from '@/api/utils/validateResponse'
+import AppHeader from '@/components/AppHeader.vue'
+import { useFavoritesStore } from '@/stores/favorites'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
+const favorites = useFavoritesStore()
 const route = useRoute()
 const drinkName = route.params.name
 const cocktail = ref()
@@ -31,9 +34,11 @@ onMounted(async () => {
 </script>
 
 <template>
+  <AppHeader />
   {{ drinkName }}
-  <h1>drink</h1>
   <div v-if="cocktail !== undefined && cocktail !== null">
+    <p v-if="favorites.cocktails.includes(cocktail.idDrink)">i am a favorite</p>
+    <p v-else>not a favorite</p>
     {{ cocktail }}
     <img :src="cocktail.strDrinkThumb" alt="" />
   </div>
