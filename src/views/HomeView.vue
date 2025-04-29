@@ -1,38 +1,97 @@
 <script setup lang="js">
-// import getCocktailByName from '../api/getCocktailByName'
 import getCocktailsByFirstLetter from '../api/getCocktailsByFirstLetter'
-// import filterCocktailsByCategory from '../api/filterCocktailsByCategory'
-// import listCategories from '../api/listCategories'
-import { onMounted, ref, watch } from 'vue'
+import filterCocktailsByCategory from '../api/filterCocktailsByCategory'
+import { ref, watch } from 'vue'
 import AzInput from '../components/AzInput.vue'
 import AppCategories from '../components/AppCategories.vue'
+// import AppHeader from '../components/AppHeader.vue'
+import validateResponse from '@/api/utils/validateResponse'
+// import getCocktailByName from '@/api/getCocktailByName'
+import HomeHeader from '@/components/HomeHeader.vue'
+import getCocktailByName from '@/api/getCocktailByName'
 
-const letter = ref('')
+const letterSelected = ref('')
+const cocktails = ref([])
+const categorySelected = ref('')
 
-watch(letter, handleGetCocktailsByFirstLetter)
+watch(letterSelected, handleGetCocktailsByFirstLetter)
+watch(categorySelected, handleFilterCocktailsByCategory)
 
-onMounted(() => {
-  // getCocktailByName('Long')
-  // getCocktailsByFirstLetter('a')
-  // filterCocktailsByCategory('Shake')
-  // listCategories()
-})
+async function handleGetCocktailByName(searchText) {
+  if (searchText != '') {
+    const response = await getCocktailByName(searchText)
+    let validation = validateResponse(response)
+
+    switch (validation) {
+      case 1:
+        cocktails.value = []
+        break
+      case 2:
+        cocktails.value = []
+        break
+      default:
+        cocktails.value = response
+        break
+    }
+  }
+}
 
 async function handleGetCocktailsByFirstLetter() {
-  if (letter.value != '') {
-    const response = await getCocktailsByFirstLetter(letter.value)
-    if (typeof response !== typeof Error) {
-      console.log(response)
+  if (letterSelected.value !== '' && letterSelected.value !== null) {
+    categorySelected.value = ''
+
+    const response = await getCocktailsByFirstLetter(letterSelected.value)
+    let validation = validateResponse(response)
+
+    switch (validation) {
+      case 1:
+        cocktails.value = []
+        break
+      case 2:
+        cocktails.value = []
+        break
+      default:
+        cocktails.value = response
+        break
+    }
+  }
+}
+
+async function handleFilterCocktailsByCategory() {
+  if (categorySelected.value !== '' && categorySelected.value !== null) {
+    letterSelected.value = ''
+
+    const response = await filterCocktailsByCategory(categorySelected.value)
+    let validation = validateResponse(response)
+
+    switch (validation) {
+      case 1:
+        cocktails.value = []
+        break
+      case 2:
+        cocktails.value = []
+        break
+      default:
+        cocktails.value = response
+        break
     }
   }
 }
 </script>
 
 <template>
+  <HomeHeader @send-search-cocktail="handleGetCocktailByName" />
+  <!-- <AppHeader @update-cocktails="handleUpdateCocktails" /> -->
   <main>
     <h1>hey</h1>
-    <AzInput v-model:letter="letter"></AzInput>
-    {{ letter }}
-    <AppCategories></AppCategories>
+    <AzInput v-model:letter="letterSelected"></AzInput>
+    {{ letterSelected }}
+    <AppCategories v-model:categorySelected="categorySelected"></AppCategories>
+    <ul>
+      <li v-for="cocktail in cocktails" :key="cocktail.idDrink">
+        {{ cocktail }}
+      </li>
+    </ul>
+    <a href="/drink/teste">go to drink</a>
   </main>
 </template>

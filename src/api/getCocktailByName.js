@@ -5,7 +5,8 @@ export default async function getCocktailByName(name) {
 
   try {
     const response = await axios.get(`${URL}/search.php?s=${name}`)
-    return response.data
+
+    return response.data.drinks
   } catch (error) {
     return error
   }

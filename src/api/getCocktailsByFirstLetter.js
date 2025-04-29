@@ -5,7 +5,7 @@ export default async function getCocktailsByFirstLetter(firstLetter) {
 
   try {
     const response = await axios.get(`${URL}/search.php?f=${firstLetter}`)
-    return response.data
+    return response.data.drinks
   } catch (error) {
     return error
   }
