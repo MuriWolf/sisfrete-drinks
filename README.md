@@ -1,41 +1,16 @@
 # siscrete_drinks
 
-This template should help get you started developing with Vue 3 in Vite.
+## Instalação
+1. `git clone https://github.com/MuriWolf/sisfrete-drinks.git` 
+2. `npm install` 
+3. `npm run dev`
 
-## Recommended IDE Setup
+## Design
+### Página principal
+![image](https://github.com/user-attachments/assets/0b900865-0738-42fb-801d-b657e9fdcff9)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### Páginas detalhes do drink
+![image](https://github.com/user-attachments/assets/8d5b8fae-9d93-4c42-a6c1-4c4515e28db4)
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## Anotações / arquitetura
+![image](https://github.com/user-attachments/assets/d941754a-93d3-4b4d-b8a2-dbc0a024b342)
