@@ -1,0 +1,21 @@
+* {
+  font-size: 14ppx;
+}
+
+// @media (hover: hover) {
+//   a:hover {
+//     background-color: hsla(160, 100%, 37%, 0.2);
+//   }
+// }
+
+#app {
+  display: grid;
+  grid-template-rows: 180px auto 100px;
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  * {
+    font-size: 18px;
+  }
+}

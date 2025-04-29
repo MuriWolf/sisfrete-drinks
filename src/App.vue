@@ -1,5 +1,7 @@
 <script setup lang="js">
 import { RouterView } from 'vue-router'
+import './assets/base.scss'
+import './assets/main.scss'
 </script>
 
 <template>
@@ -12,5 +14,3 @@ import { RouterView } from 'vue-router'
 
   <RouterView />
 </template>
-
-<style scoped></style>
